@@ -18,17 +18,17 @@ jobs:
           name: "Save hello to owner"
           command: "echo Hello $OWNER_NAME! > output.txt"
       - persist_to_workspace:
-          root: /tmp/dir
+          root: ./ 
           paths: output.txt
   read-hello-to-owner:
     docker:
       - image: cimg/base:stable
     steps:
       - attach_workspace:
-          at: /tmp/dir
+          at: ./
       - run:
           name: "Read and print saved info"
-          command: "cat /tmp/dir/output.txt"
+          command: "cat ./output.txt"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
