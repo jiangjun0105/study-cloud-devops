@@ -29,8 +29,7 @@ jobs:
           name: Run Playbook and Configure server
           command: |
             # aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory
-            ssh 13.231.38.225
-            ansible-playbook -i inventory main-remote.yml -c paramiko
+            ansible-playbook -i inventory main-remote.yml
 workflows:
   # Name the workflow
   deploy-workflow:
