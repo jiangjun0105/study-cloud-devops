@@ -36,4 +36,6 @@ workflows:
   say-hello-world-workflow:
     jobs:
       - save-hello-to-owner
-      - read-hello-to-owner
+      - read-hello-to-owner:
+          requires:
+            - save-hello-to-owner
