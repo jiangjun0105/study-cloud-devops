@@ -47,10 +47,26 @@ jobs:
             else
               return 1
             fi
+  # Exercise: Destroy Env
+  destroy_environment:
+    steps:
+      - run:
+          name: Destroy environment
+          when: on_fail
+          command: |
+            # ${CIRCLE_WORKFLOW_ID} is a Built-in environment variable 
+            # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID 
+            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
+        
 workflows:
   # Name the workflow
   deploy-workflow:
     jobs:
-      # - create_infrastructure
+      - create_infrastructure
       # - configure_infrastructure
-      - smoke_test
+      - smoke_test:
+          requires:
+            - create_infrastructure
+      - destroy_environment:
+          requires:
+            - smoke_test
